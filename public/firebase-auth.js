@@ -53,7 +53,7 @@ if (googleButton && hasFirebaseConfig) {
 
       ui?.setSession?.(data.token, data.user);
       ui?.showToast?.(data.message, "success");
-      window.location.href = ui?.getRedirectTarget?.() || "/reports.html";
+      window.location.href = ui?.getRedirectTarget?.() || "./diet.html";
     } catch (error) {
       ui?.showToast?.(error.message || "Unable to sign in with Google.", "error");
     } finally {

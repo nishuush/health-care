@@ -8,8 +8,8 @@ const jwt = require("jsonwebtoken");
 dotenv.config();
 
 const User = require("./src/models/User");
-const PatientReport = require("./src/models/PatientReport");
 const { buildNutrientGuidance } = require("./src/utils/nutrients");
+const { buildDietRecommendation } = require("./src/utils/dietPlan");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -230,73 +230,58 @@ app.get("/api/auth/me", authMiddleware, async (req, res) => {
   return res.json({ user: req.user });
 });
 
-app.post("/api/reports", authMiddleware, async (req, res) => {
+app.post("/api/diet/recommendation", authMiddleware, (req, res) => {
   try {
-    const patientId = sanitizeText(req.body.patientId);
-    const patientName = sanitizeText(req.body.patientName);
-    const patientAge = Number(req.body.patientAge);
-    const patientGender = sanitizeText(req.body.patientGender);
-    const lastAppointment = sanitizeText(req.body.lastAppointment);
-    const doctorName = sanitizeText(req.body.doctorName);
-    const appointmentDate = sanitizeText(req.body.appointmentDate);
-    const bloodPressure = sanitizeText(req.body.bloodPressure);
-    const cholesterol = sanitizeText(req.body.cholesterol);
-    const sugar = sanitizeText(req.body.sugar);
+    const age = Number(req.body.age);
+    const gender = sanitizeText(req.body.gender);
+    const weight = Number(req.body.weight);
+    const height = Number(req.body.height);
+    const bmiInput = Number(req.body.bmi);
+    const goal = sanitizeText(req.body.goal);
+    const activity = sanitizeText(req.body.activity);
     const errors = [];
 
-    if (!patientId) errors.push("Patient ID is required.");
-    if (!patientName) errors.push("Patient name is required.");
-    if (Number.isNaN(patientAge) || patientAge <= 0) {
-      errors.push("Patient age must be a valid number.");
+    if (Number.isNaN(age) || age <= 0) {
+      errors.push("Age must be a valid number.");
     }
-    if (!patientGender) errors.push("Patient gender is required.");
-    if (!doctorName) errors.push("Doctor name is required.");
-    if (!appointmentDate) errors.push("Appointment date is required.");
-    if (!bloodPressure) errors.push("Blood pressure is required.");
-    if (!cholesterol) errors.push("Cholesterol value is required.");
-    if (!sugar) errors.push("Sugar value is required.");
+    if (!gender) {
+      errors.push("Gender is required.");
+    }
+    if (Number.isNaN(weight) || weight <= 0) {
+      errors.push("Weight must be a valid number in kilograms.");
+    }
+    if (Number.isNaN(height) || height <= 0) {
+      errors.push("Height must be a valid number in centimeters.");
+    }
+    if (!goal) {
+      errors.push("Goal is required.");
+    }
+    if (!activity) {
+      errors.push("Activity level is required.");
+    }
 
     if (errors.length) {
-      return formatErrorResponse(res, 400, "Please fix the report form errors.", errors);
+      return formatErrorResponse(res, 400, "Please fix the diet form issues.", errors);
     }
 
-    const report = await PatientReport.create({
-      patientId,
-      patientName,
-      patientAge,
-      patientGender,
-      lastAppointment: lastAppointment || null,
-      doctorName,
-      appointmentDate,
-      bloodPressure,
-      cholesterol,
-      sugar,
-      createdBy: req.user._id,
+    const recommendation = buildDietRecommendation({
+      age,
+      gender,
+      weight,
+      height,
+      bmi: Number.isNaN(bmiInput) ? null : bmiInput,
+      goal,
+      activity,
     });
 
-    return res.status(201).json({
-      message: "Patient report saved successfully.",
-      report,
+    return res.json({
+      message: "Diet plan generated successfully.",
+      recommendation,
     });
   } catch (error) {
-    console.error("Create report error:", error);
-    return formatErrorResponse(res, 500, "Unable to save patient report.", [
+    console.error("Diet recommendation error:", error);
+    return formatErrorResponse(res, 500, "Unable to generate a diet plan right now.", [
       "Please try again in a moment.",
-    ]);
-  }
-});
-
-app.get("/api/reports", authMiddleware, async (req, res) => {
-  try {
-    const reports = await PatientReport.find({ createdBy: req.user._id }).sort({
-      createdAt: -1,
-    });
-
-    return res.json({ reports });
-  } catch (error) {
-    console.error("Fetch reports error:", error);
-    return formatErrorResponse(res, 500, "Unable to fetch reports.", [
-      "Please refresh and try again.",
     ]);
   }
 });

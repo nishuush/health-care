@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reports | Health Care</title>
+    <title>Smart Diet Recommendation | Health Care</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,7 +19,8 @@
         <div class="header-main">
           <a class="brand" href="./index.html">Health Care</a>
           <nav class="site-nav">
-            <a class="active" href="./reports.html">Reports</a>
+            <a class="active" href="./diet.html">Smart Diet</a>
+            <a href="./diet-plan.html">Diet Chart</a>
             <a href="./nutrients.html">Nutrients</a>
             <a href="./bmi.html">BMI</a>
           </nav>
@@ -49,75 +50,74 @@
       <main class="stack-layout" data-protected-page>
         <section class="panel">
           <div class="section-title">
-            <p class="eyebrow">Reports</p>
-            <h2>Add patient details</h2>
+            <p class="eyebrow">Smart Diet Recommendation</p>
+            <h2>Build your personalized Indian diet plan</h2>
           </div>
-          <p id="reports-guard" class="page-copy">
-            Sign in to save and view patient reports.
+          <p class="page-copy">
+            Enter your health details and we will calculate calories, estimate your BMI,
+            and prepare a practical daily meal plan using familiar Indian foods.
           </p>
-          <form id="report-form" class="report-form">
+
+          <div class="journey-banner">
+            <div class="journey-step active">
+              <span>1</span>
+              <strong>Enter Details</strong>
+            </div>
+            <div class="journey-step">
+              <span>2</span>
+              <strong>Get Meal Plan</strong>
+            </div>
+          </div>
+
+          <form id="diet-form" class="detail-form">
             <div class="form-grid">
               <div class="field-group">
-                <label for="patient-id">Patient Id</label>
-                <input id="patient-id" name="patientId" type="text" placeholder="P-1024" required />
+                <label for="diet-age">Age</label>
+                <input id="diet-age" name="age" type="number" min="1" placeholder="21" required />
               </div>
               <div class="field-group">
-                <label for="patient-name">Patient Name</label>
-                <input id="patient-name" name="patientName" type="text" placeholder="Patient name" required />
-              </div>
-              <div class="field-group">
-                <label for="patient-age">Patient Age</label>
-                <input id="patient-age" name="patientAge" type="number" min="0" placeholder="Age" required />
-              </div>
-              <div class="field-group">
-                <label for="patient-gender">Patient Gender</label>
-                <select id="patient-gender" name="patientGender" required>
+                <label for="diet-gender">Gender</label>
+                <select id="diet-gender" name="gender" required>
                   <option value="">Select gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               <div class="field-group">
-                <label for="last-appointment">Last Appointment</label>
-                <input id="last-appointment" name="lastAppointment" type="date" />
+                <label for="diet-weight">Weight (kg)</label>
+                <input id="diet-weight" name="weight" type="number" min="1" step="0.1" placeholder="70" required />
               </div>
               <div class="field-group">
-                <label for="doctor-name">Doctor Name</label>
-                <input id="doctor-name" name="doctorName" type="text" placeholder="Doctor name" required />
+                <label for="diet-height">Height (cm)</label>
+                <input id="diet-height" name="height" type="number" min="1" step="0.1" placeholder="175" required />
               </div>
               <div class="field-group">
-                <label for="appointment-date">Appointment Date</label>
-                <input id="appointment-date" name="appointmentDate" type="date" required />
+                <label for="diet-bmi">BMI</label>
+                <input id="diet-bmi" name="bmi" type="number" min="1" step="0.1" placeholder="Auto-calculated if empty" />
               </div>
               <div class="field-group">
-                <label for="blood-pressure">Patient Blood Pressure</label>
-                <input id="blood-pressure" name="bloodPressure" type="text" placeholder="120/80" required />
+                <label for="diet-goal">Goal</label>
+                <select id="diet-goal" name="goal" required>
+                  <option value="">Select goal</option>
+                  <option value="Weight Loss">Weight Loss</option>
+                  <option value="Maintain">Maintain</option>
+                  <option value="Weight Gain">Weight Gain</option>
+                </select>
               </div>
               <div class="field-group">
-                <label for="cholesterol">Patient Cholesterol</label>
-                <input id="cholesterol" name="cholesterol" type="text" placeholder="180 mg/dL" required />
-              </div>
-              <div class="field-group">
-                <label for="sugar">Patient Sugar</label>
-                <input id="sugar" name="sugar" type="text" placeholder="95 mg/dL" required />
+                <label for="diet-activity">Activity Level</label>
+                <select id="diet-activity" name="activity" required>
+                  <option value="">Select activity</option>
+                  <option value="Sedentary">Sedentary</option>
+                  <option value="Light">Light</option>
+                  <option value="Moderate">Moderate</option>
+                  <option value="Active">Active</option>
+                </select>
               </div>
             </div>
-            <button type="submit" class="primary-button">Save Report</button>
+            <button type="submit" class="primary-button">Generate Diet Plan</button>
           </form>
-        </section>
-
-        <section class="panel">
-          <div class="section-title">
-            <p class="eyebrow">Saved Data</p>
-            <h2>Recent patient reports</h2>
-          </div>
-          <button id="refresh-reports" class="secondary-button" type="button">
-            Refresh Reports
-          </button>
-          <div id="reports-list" class="reports-list">
-            Sign in to view saved patient reports.
-          </div>
         </section>
       </main>
 

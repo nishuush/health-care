@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BMI Calculator | Health Care</title>
+    <title>Diet Plan Result | Health Care</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,10 +19,10 @@
         <div class="header-main">
           <a class="brand" href="./index.html">Health Care</a>
           <nav class="site-nav">
-            <a href="./diet.html" data-protected-link>Smart Diet</a>
-            <a href="./diet-plan.html" data-protected-link>Diet Chart</a>
-            <a href="./nutrients.html" data-protected-link>Nutrients</a>
-            <a class="active" href="./bmi.html">BMI</a>
+            <a href="./diet.html">Smart Diet</a>
+            <a class="active" href="./diet-plan.html">Diet Chart</a>
+            <a href="./nutrients.html">Nutrients</a>
+            <a href="./bmi.html">BMI</a>
           </nav>
         </div>
         <div class="header-actions">
@@ -47,29 +47,35 @@
         </div>
       </header>
 
-      <main class="single-panel-layout" data-protected-page>
-        <section class="panel tool-shell">
+      <main class="stack-layout" data-protected-page>
+        <section class="panel">
           <div class="section-title">
-            <p class="eyebrow">Calculator</p>
-            <h2>Calculate BMI</h2>
+            <p class="eyebrow">Personalized Result</p>
+            <h2>Your daily Indian meal recommendation</h2>
           </div>
           <p class="page-copy">
-            Use height in centimeters and weight in kilograms to calculate body
-            mass index.
+            This plan is calculated from your age, body details, goal, and activity level.
           </p>
-          <form id="bmi-form" class="compact-form">
-            <div class="field-group">
-              <label for="bmi-height">Height (cm)</label>
-              <input id="bmi-height" type="number" min="1" placeholder="170" required />
+
+          <div class="journey-banner">
+            <div class="journey-step">
+              <span>1</span>
+              <strong>Enter Details</strong>
             </div>
-            <div class="field-group">
-              <label for="bmi-weight">Weight (kg)</label>
-              <input id="bmi-weight" type="number" min="1" placeholder="65" required />
+            <div class="journey-step active">
+              <span>2</span>
+              <strong>Get Meal Plan</strong>
             </div>
-            <button type="submit" class="primary-button">Calculate BMI</button>
-          </form>
-          <div id="bmi-result" class="result-card">
-            <p><strong>BMI result</strong> will appear here with a comparison bar.</p>
+          </div>
+
+          <div id="diet-plan-result" class="diet-plan-layout">
+            <div class="result-card">
+              Generate a plan from the Smart Diet page to see your result here.
+            </div>
+          </div>
+          <div class="cta-row">
+            <a class="primary-link" href="./diet.html">Create Another Plan</a>
+            <a class="secondary-link" href="./bmi.html">Open BMI Tool</a>
           </div>
         </section>
       </main>

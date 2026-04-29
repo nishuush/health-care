@@ -3,7 +3,7 @@
 A simple full-stack web application for:
 
 - Sign up and sign in
-- Save patient reports in MongoDB
+- Generate personalized smart diet recommendations
 - Get nutrients guidance by age
 - Calculate BMI
 
@@ -29,7 +29,7 @@ A simple full-stack web application for:
    JWT_SECRET=replace-with-a-secure-secret
    ```
 
-   If you want login/signup data and reports to be stored online even while the app is running locally on your computer, use a MongoDB Atlas connection string in `MONGODB_URI`. The website can run on `localhost`, while the data is saved in your online Atlas database. Example:
+   If you want login/signup data to be stored online even while the app is running locally on your computer, use a MongoDB Atlas connection string in `MONGODB_URI`. The website can run on `localhost`, while the data is saved in your online Atlas database. Example:
 
    ```env
    MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/patient_health_app?retryWrites=true&w=majority&appName=Cluster0
@@ -59,7 +59,7 @@ Important:
 
 - GitHub Pages can host the HTML/CSS/JS frontend only.
 - The Node.js backend and MongoDB APIs cannot run on GitHub Pages.
-- If you deploy this repo to GitHub Pages, login, Google sign-in, reports, and MongoDB features will still need a separately hosted backend.
+- If you deploy this repo to GitHub Pages, login, Google sign-in, smart diet generation, and MongoDB features will still need a separately hosted backend.
 
 ## Firebase Google Sign-In
 

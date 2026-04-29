@@ -19,20 +19,26 @@
         <div class="header-main">
           <a class="brand" href="./index.html">Health Care</a>
           <nav class="site-nav">
-            <a href="./reports.html" data-protected-link>Reports</a>
+            <a href="./diet.html" data-protected-link>Smart Diet</a>
+            <a href="./diet-plan.html" data-protected-link>Diet Chart</a>
             <a href="./nutrients.html" data-protected-link>Nutrients</a>
             <a href="./bmi.html" data-protected-link>BMI</a>
           </nav>
         </div>
         <div class="header-actions">
-          <label class="theme-switcher" for="theme-select">
-            <span>Theme</span>
-            <select id="theme-select" aria-label="Theme mode">
-              <option value="system">System</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+            <span class="theme-toggle-icon theme-toggle-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M12 2.5v2.3M12 19.2v2.3M4.8 4.8l1.6 1.6M17.6 17.6l1.6 1.6M2.5 12h2.3M19.2 12h2.3M4.8 19.2l1.6-1.6M17.6 6.4l1.6-1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="theme-toggle-icon theme-toggle-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M18.5 14.6A7.5 7.5 0 1 1 9.4 5.5a6.2 6.2 0 0 0 9.1 9.1Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
           <div class="auth-entry-links">
             <a class="auth-entry-link" href="./signin.html" data-auth-entry>Login</a>
           </div>
@@ -44,21 +50,21 @@
       <main class="landing-layout">
         <section class="hero-copy">
           <p class="eyebrow">Patient Health Platform</p>
-          <h1>Organize patient care with dedicated pages for every workflow.</h1>
+          <h1>Get guided health support with nutrition, BMI, and smart meal planning.</h1>
           <p class="hero-text">
-            Manage account access, add reports, review nutrient guidance, and
-            calculate BMI from a simple clinic dashboard built with HTML, CSS,
-            JavaScript, and MongoDB.
+            Sign in to explore a simple health dashboard that calculates BMI,
+            shows age-based nutrient guidance, and creates personalized Indian
+            diet plans based on your goals and activity level.
           </p>
           <div class="hero-badges">
             <span>Separate pages</span>
-            <span>Patient reports</span>
+            <span>Smart diet planner</span>
             <span>Age-based nutrients</span>
             <span>BMI tools</span>
           </div>
           <div class="cta-row">
             <a class="primary-link" href="./signup.html">Create Account</a>
-            <a class="secondary-link" href="./reports.html" data-protected-link>Open Reports</a>
+            <a class="secondary-link" href="./diet.html" data-protected-link>Start Diet Plan</a>
           </div>
         </section>
 
@@ -66,9 +72,13 @@
           <p class="card-label">Quick access</p>
           <h2>Choose the section you need.</h2>
           <div class="feature-list">
-            <a class="feature-item" href="./reports.html" data-protected-link>
-              <strong>Reports</strong>
-              <span>Add patient details and view saved records.</span>
+            <a class="feature-item" href="./diet.html" data-protected-link>
+              <strong>Smart Diet Recommendation</strong>
+              <span>Enter your health details and generate a daily Indian meal plan.</span>
+            </a>
+            <a class="feature-item" href="./diet-plan.html" data-protected-link>
+              <strong>Diet Plan Result</strong>
+              <span>Review calories, meals, and quick health advice on a separate screen.</span>
             </a>
             <a class="feature-item" href="./nutrients.html" data-protected-link>
               <strong>Nutrients</strong>

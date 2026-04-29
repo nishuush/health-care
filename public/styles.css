@@ -552,7 +552,40 @@ svg {
 }
 
 .create-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  min-height: 48px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.auth-create-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #dd6b20, #f59e0b);
+  color: #ffffff;
+  border: 0;
+  box-shadow: 0 12px 28px rgba(221, 107, 32, 0.22);
+}
+
+.auth-create-button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #c45712, #e98b08);
+}
+
+.auth-submit-button {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 16px;
+  font-size: 1rem;
+}
+
+.auth-switch-link {
+  min-height: 48px;
+  font-weight: 700;
 }
 
 .field-group {

@@ -69,8 +69,17 @@
               <label for="signup-password">Password</label>
               <input id="signup-password" name="password" type="password" placeholder="Create a password" required />
             </div>
-            <button type="submit" class="primary-button">Create Account</button>
+            <button type="submit" class="primary-button auth-create-button auth-submit-button">Create Account</button>
           </form>
+          <div class="auth-divider">
+            <span>or</span>
+          </div>
+          <div class="auth-alt-actions">
+            <button class="google-button" type="button" data-google-signin>
+              Sign in with Google
+            </button>
+            <a class="secondary-link auth-switch-link" href="./signin.html">Back to Login</a>
+          </div>
         </section>
       </main>
 
@@ -81,6 +90,8 @@
       </footer>
     </div>
 
+    <script src="./firebase-config.js"></script>
     <script src="./app.js"></script>
+    <script type="module" src="./firebase-auth.js"></script>
   </body>
 </html>

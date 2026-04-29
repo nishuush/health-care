@@ -23,7 +23,15 @@ let toastHost = null;
 const storageKey = "patient-health-token";
 const userKey = "patient-health-user";
 const themeKey = "patient-health-theme";
-const signInPagePath = "/signin.html";
+const signInPagePath = "signin.html";
+
+const isSafeInternalTarget = (value) =>
+  typeof value === "string" &&
+  value.length > 0 &&
+  !value.startsWith("http://") &&
+  !value.startsWith("https://") &&
+  !value.startsWith("//") &&
+  !value.startsWith("javascript:");
 
 const applyThemePreference = (preference) => {
   if (preference === "light" || preference === "dark") {
@@ -167,8 +175,8 @@ const getRedirectTarget = () => {
   const params = new URLSearchParams(window.location.search);
   const next = params.get("next");
 
-  if (!next || !next.startsWith("/")) {
-    return "/reports.html";
+  if (!isSafeInternalTarget(next)) {
+    return "reports.html";
   }
 
   return next;
@@ -178,11 +186,11 @@ const syncAuthEntryLinks = () => {
   const params = new URLSearchParams(window.location.search);
   const next = params.get("next");
 
-  if (!next || !next.startsWith("/")) {
+  if (!isSafeInternalTarget(next)) {
     return;
   }
 
-  document.querySelectorAll('a[href="/signin.html"], a[href="/signup.html"]').forEach((link) => {
+  document.querySelectorAll('a[href="./signin.html"], a[href="./signup.html"], a[href="signin.html"], a[href="signup.html"]').forEach((link) => {
     const url = new URL(link.href, window.location.origin);
     url.searchParams.set("next", next);
     link.href = `${url.pathname}${url.search}`;
@@ -243,7 +251,7 @@ const updateReportsGuard = (user) => {
     reportsGuard.textContent = "You can add a new patient report and review saved records below.";
   } else {
     reportsGuard.innerHTML =
-      'Sign in to save and view patient reports. <a href="/signin.html">Go to sign in</a>';
+      'Sign in to save and view patient reports. <a href="signin.html">Go to sign in</a>';
   }
 };
 
@@ -458,7 +466,7 @@ if (reportForm) {
 
     if (!getToken()) {
       showToast("Please sign in before saving patient reports.", "error");
-      window.location.href = "/signin.html";
+      window.location.href = "signin.html";
       return;
     }
 

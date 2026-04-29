@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator | Health Care</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="header-main">
+          <a class="brand" href="/index.html">Health Care</a>
+          <nav class="site-nav">
+            <a href="/reports.html" data-protected-link>Reports</a>
+            <a href="/nutrients.html" data-protected-link>Nutrients</a>
+            <a class="active" href="/bmi.html">BMI</a>
+          </nav>
+        </div>
+        <div class="header-actions">
+          <label class="theme-switcher" for="theme-select">
+            <span>Theme</span>
+            <select id="theme-select" aria-label="Theme mode">
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
+          <div class="auth-entry-links">
+            <a class="auth-entry-link" href="/signin.html" data-auth-entry>Login</a>
+          </div>
+          <p id="auth-status" class="auth-label hidden"></p>
+          <button id="logout-button" class="secondary-button hidden" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main class="single-panel-layout" data-protected-page>
+        <section class="panel tool-shell">
+          <div class="section-title">
+            <p class="eyebrow">Calculator</p>
+            <h2>Calculate BMI</h2>
+          </div>
+          <p class="page-copy">
+            Use height in centimeters and weight in kilograms to calculate body
+            mass index.
+          </p>
+          <form id="bmi-form" class="compact-form">
+            <div class="field-group">
+              <label for="bmi-height">Height (cm)</label>
+              <input id="bmi-height" type="number" min="1" placeholder="170" required />
+            </div>
+            <div class="field-group">
+              <label for="bmi-weight">Weight (kg)</label>
+              <input id="bmi-weight" type="number" min="1" placeholder="65" required />
+            </div>
+            <button type="submit" class="primary-button">Calculate BMI</button>
+          </form>
+          <div id="bmi-result" class="result-card">
+            BMI result will appear here.
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <button class="credit-button" type="button" data-project-credit>
+          Designed By Nishu
+        </button>
+      </footer>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

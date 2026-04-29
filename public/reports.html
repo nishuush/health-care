@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports | Health Care</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="header-main">
+          <a class="brand" href="/index.html">Health Care</a>
+          <nav class="site-nav">
+            <a class="active" href="/reports.html">Reports</a>
+            <a href="/nutrients.html">Nutrients</a>
+            <a href="/bmi.html">BMI</a>
+          </nav>
+        </div>
+        <div class="header-actions">
+          <label class="theme-switcher" for="theme-select">
+            <span>Theme</span>
+            <select id="theme-select" aria-label="Theme mode">
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
+          <div class="auth-entry-links">
+            <a class="auth-entry-link" href="/signin.html" data-auth-entry>Login</a>
+          </div>
+          <p id="auth-status" class="auth-label hidden"></p>
+          <button id="logout-button" class="secondary-button hidden" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main class="stack-layout" data-protected-page>
+        <section class="panel">
+          <div class="section-title">
+            <p class="eyebrow">Reports</p>
+            <h2>Add patient details</h2>
+          </div>
+          <p id="reports-guard" class="page-copy">
+            Sign in to save and view patient reports.
+          </p>
+          <form id="report-form" class="report-form">
+            <div class="form-grid">
+              <div class="field-group">
+                <label for="patient-id">Patient Id</label>
+                <input id="patient-id" name="patientId" type="text" placeholder="P-1024" required />
+              </div>
+              <div class="field-group">
+                <label for="patient-name">Patient Name</label>
+                <input id="patient-name" name="patientName" type="text" placeholder="Patient name" required />
+              </div>
+              <div class="field-group">
+                <label for="patient-age">Patient Age</label>
+                <input id="patient-age" name="patientAge" type="number" min="0" placeholder="Age" required />
+              </div>
+              <div class="field-group">
+                <label for="patient-gender">Patient Gender</label>
+                <select id="patient-gender" name="patientGender" required>
+                  <option value="">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label for="last-appointment">Last Appointment</label>
+                <input id="last-appointment" name="lastAppointment" type="date" />
+              </div>
+              <div class="field-group">
+                <label for="doctor-name">Doctor Name</label>
+                <input id="doctor-name" name="doctorName" type="text" placeholder="Doctor name" required />
+              </div>
+              <div class="field-group">
+                <label for="appointment-date">Appointment Date</label>
+                <input id="appointment-date" name="appointmentDate" type="date" required />
+              </div>
+              <div class="field-group">
+                <label for="blood-pressure">Patient Blood Pressure</label>
+                <input id="blood-pressure" name="bloodPressure" type="text" placeholder="120/80" required />
+              </div>
+              <div class="field-group">
+                <label for="cholesterol">Patient Cholesterol</label>
+                <input id="cholesterol" name="cholesterol" type="text" placeholder="180 mg/dL" required />
+              </div>
+              <div class="field-group">
+                <label for="sugar">Patient Sugar</label>
+                <input id="sugar" name="sugar" type="text" placeholder="95 mg/dL" required />
+              </div>
+            </div>
+            <button type="submit" class="primary-button">Save Report</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <p class="eyebrow">Saved Data</p>
+            <h2>Recent patient reports</h2>
+          </div>
+          <button id="refresh-reports" class="secondary-button" type="button">
+            Refresh Reports
+          </button>
+          <div id="reports-list" class="reports-list">
+            Sign in to view saved patient reports.
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <button class="credit-button" type="button" data-project-credit>
+          Designed By Nishu
+        </button>
+      </footer>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

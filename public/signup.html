@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account | Health Care</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="header-main">
+          <a class="brand" href="/index.html">Health Care</a>
+          <nav class="site-nav">
+            <a href="/reports.html" data-protected-link>Reports</a>
+            <a href="/nutrients.html" data-protected-link>Nutrients</a>
+            <a href="/bmi.html" data-protected-link>BMI</a>
+          </nav>
+        </div>
+        <div class="header-actions">
+          <label class="theme-switcher" for="theme-select">
+            <span>Theme</span>
+            <select id="theme-select" aria-label="Theme mode">
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
+          <div class="auth-entry-links">
+            <a class="auth-entry-link" href="/signin.html" data-auth-entry>Login</a>
+          </div>
+          <p id="auth-status" class="auth-label hidden"></p>
+          <button id="logout-button" class="secondary-button hidden" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main class="single-panel-layout">
+        <section class="panel auth-shell">
+          <div class="section-title">
+            <p class="eyebrow">Access</p>
+            <h2>Create your account</h2>
+          </div>
+          <p class="page-copy">
+            Register a clinic user account to save reports securely in MongoDB.
+          </p>
+          <form id="signup-form" class="auth-form">
+            <div class="field-group">
+              <label for="signup-name">Full Name</label>
+              <input id="signup-name" name="name" type="text" placeholder="Dr. Anika Rao" required />
+            </div>
+            <div class="field-group">
+              <label for="signup-email">Email</label>
+              <input id="signup-email" name="email" type="email" placeholder="clinic@example.com" required />
+            </div>
+            <div class="field-group">
+              <label for="signup-password">Password</label>
+              <input id="signup-password" name="password" type="password" placeholder="Create a password" required />
+            </div>
+            <button type="submit" class="primary-button">Create Account</button>
+          </form>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <button class="credit-button" type="button" data-project-credit>
+          Designed By Nishu
+        </button>
+      </footer>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

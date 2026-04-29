@@ -1,0 +1,25 @@
+{
+  "name": "health-care",
+  "version": "1.0.0",
+  "description": "Health Care app with authentication, reports, nutrients guidance, and BMI calculator.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "mongodb",
+    "express",
+    "patient",
+    "healthcare"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1"
+  }
+}

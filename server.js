@@ -153,6 +153,31 @@ app.post("/api/auth/signup", async (req, res) => {
   } catch (error) {
     console.error("Signup error:", error);
     if (error.code === 11000) {
+      const duplicateUser = await User.findOne({
+        $or: [
+          req.body?.email ? { email: sanitizeText(req.body.email).toLowerCase() } : null,
+          req.body?.googleId ? { googleId: sanitizeText(req.body.googleId) } : null,
+        ].filter(Boolean),
+      });
+
+      if (duplicateUser && !duplicateUser.password && duplicateUser.googleId) {
+        const name = sanitizeText(req.body.name);
+        const password = String(req.body.password || "");
+
+        if (password.length >= 6) {
+          duplicateUser.name = name || duplicateUser.name;
+          duplicateUser.password = await bcrypt.hash(password, 10);
+          await duplicateUser.save();
+
+          return res.status(200).json(
+            buildAuthResponse(
+              duplicateUser,
+              "Account completed successfully. You can now sign in with password or Google."
+            )
+          );
+        }
+      }
+
       return formatErrorResponse(res, 409, "Email is already registered.", [
         "Use another email or log in with the existing account.",
       ]);

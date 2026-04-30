@@ -286,36 +286,72 @@ const goToSignIn = (nextPath) => {
   window.location.href = `${signInPagePath}?next=${encodeURIComponent(target)}`;
 };
 
-const getToken = () => localStorage.getItem(storageKey);
+const safeStorageGet = (key) => {
+  try {
+    return localStorage.getItem(key) || sessionStorage.getItem(key);
+  } catch (_error) {
+    return null;
+  }
+};
+
+const safeStorageSet = (key, value) => {
+  try {
+    localStorage.setItem(key, value);
+  } catch (_error) {
+    // Ignore storage write failures and try session storage.
+  }
+
+  try {
+    sessionStorage.setItem(key, value);
+  } catch (_error) {
+    // Ignore storage write failures.
+  }
+};
+
+const safeStorageRemove = (key) => {
+  try {
+    localStorage.removeItem(key);
+  } catch (_error) {
+    // Ignore storage remove failures.
+  }
+
+  try {
+    sessionStorage.removeItem(key);
+  } catch (_error) {
+    // Ignore storage remove failures.
+  }
+};
+
+const getToken = () => safeStorageGet(storageKey);
 const getThemePreference = () => localStorage.getItem(themeKey) || "system";
 const trimValue = (value) => String(value || "").trim();
 
 const saveDietDraft = (payload) => {
-  localStorage.setItem(dietDraftKey, JSON.stringify(payload));
+  safeStorageSet(dietDraftKey, JSON.stringify(payload));
 };
 
 const getSavedDietDraft = () => {
   try {
-    return JSON.parse(localStorage.getItem(dietDraftKey) || "null");
+    return JSON.parse(safeStorageGet(dietDraftKey) || "null");
   } catch (_error) {
     return null;
   }
 };
 
 const saveDietPlan = (recommendation) => {
-  localStorage.setItem(dietPlanKey, JSON.stringify(recommendation));
+  safeStorageSet(dietPlanKey, JSON.stringify(recommendation));
 };
 
 const getSavedDietPlan = () => {
   try {
-    return JSON.parse(localStorage.getItem(dietPlanKey) || "null");
+    return JSON.parse(safeStorageGet(dietPlanKey) || "null");
   } catch (_error) {
     return null;
   }
 };
 
 const getStoredUser = () => {
-  const rawUser = localStorage.getItem(userKey);
+  const rawUser = safeStorageGet(userKey);
 
   if (!rawUser) {
     return null;
@@ -364,15 +400,15 @@ const syncProtectedLinks = (user) => {
 };
 
 const setSession = (token, user) => {
-  localStorage.setItem(storageKey, token);
-  localStorage.setItem(userKey, JSON.stringify(user));
+  safeStorageSet(storageKey, token);
+  safeStorageSet(userKey, JSON.stringify(user));
   renderAuthState(user);
   syncProtectedLinks(user);
 };
 
 const clearSession = () => {
-  localStorage.removeItem(storageKey);
-  localStorage.removeItem(userKey);
+  safeStorageRemove(storageKey);
+  safeStorageRemove(userKey);
   renderAuthState(null);
   syncProtectedLinks(null);
 };
@@ -809,7 +845,8 @@ const bootstrap = async () => {
     const data = await apiRequest(buildApiUrl("/api/auth/me"));
     setSession(getToken(), data.user);
   } catch (_error) {
-    clearSession();
+    renderAuthState(savedUser);
+    syncProtectedLinks(savedUser);
   }
 };
 

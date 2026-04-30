@@ -1,11 +1,11 @@
 :root {
-  --bg: #f4ede3;
-  --bg-accent: #dbe8dd;
-  --panel: rgba(255, 250, 242, 0.9);
-  --panel-strong: #fff8ee;
-  --line: rgba(93, 84, 71, 0.14);
-  --text: #1d2a24;
-  --muted: #59655f;
+  --bg: #eef4ef;
+  --bg-accent: #d8e6de;
+  --panel: rgba(255, 255, 255, 0.82);
+  --panel-strong: #ffffff;
+  --line: rgba(52, 74, 64, 0.14);
+  --text: #16261f;
+  --muted: #475c53;
   --primary: #0f766e;
   --primary-deep: #134e4a;
   --secondary: #dd6b20;
@@ -25,9 +25,9 @@
   --soft-accent-bg-strong: rgba(15, 118, 110, 0.16);
   --warn-soft-bg: rgba(221, 107, 32, 0.12);
   --warn-soft-text: #8a3d0d;
-  --field-bg: #fbf8f1;
-  --field-text: #1d2a24;
-  --field-placeholder: rgba(89, 101, 95, 0.82);
+  --field-bg: #f6faf7;
+  --field-text: #16261f;
+  --field-placeholder: rgba(71, 92, 83, 0.76);
   --auth-surface: linear-gradient(180deg, #fffdf8, #f8f3eb);
   --auth-text: #111827;
   --auth-muted: #334155;
@@ -37,16 +37,16 @@
 }
 
 :root[data-theme="dark"] {
-  --bg: #0e1718;
-  --bg-accent: #172427;
-  --panel: rgba(17, 25, 28, 0.9);
-  --panel-strong: #132126;
-  --line: rgba(201, 224, 215, 0.12);
-  --text: #ebf6f0;
-  --muted: #a5b8b2;
-  --primary: #49b7ae;
+  --bg: #0b1416;
+  --bg-accent: #142226;
+  --panel: rgba(19, 30, 33, 0.92);
+  --panel-strong: #16252a;
+  --line: rgba(210, 231, 224, 0.14);
+  --text: #f2fbf7;
+  --muted: #bed0ca;
+  --primary: #56cec2;
   --primary-deep: #9ee5da;
-  --secondary: #f59e63;
+  --secondary: #ff9f62;
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
   --hero-card-start: rgba(32, 83, 79, 0.96);
   --hero-card-end: rgba(10, 40, 38, 0.98);
@@ -62,9 +62,9 @@
   --soft-accent-bg-strong: rgba(73, 183, 174, 0.22);
   --warn-soft-bg: rgba(245, 158, 99, 0.16);
   --warn-soft-text: #ffd9c0;
-  --field-bg: #1a2a2f;
-  --field-text: #ebf6f0;
-  --field-placeholder: rgba(214, 235, 229, 0.68);
+  --field-bg: #203136;
+  --field-text: #f2fbf7;
+  --field-placeholder: rgba(214, 235, 229, 0.82);
   --auth-surface: linear-gradient(180deg, #fffdf8, #f5efe5);
   --auth-text: #111827;
   --auth-muted: #334155;
@@ -75,22 +75,22 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0e1718;
-    --bg-accent: #172427;
-    --panel: rgba(17, 25, 28, 0.9);
-    --panel-strong: #132126;
-    --line: rgba(201, 224, 215, 0.12);
-    --text: #ebf6f0;
-    --muted: #a5b8b2;
-    --primary: #49b7ae;
+    --bg: #0b1416;
+    --bg-accent: #142226;
+    --panel: rgba(19, 30, 33, 0.92);
+    --panel-strong: #16252a;
+    --line: rgba(210, 231, 224, 0.14);
+    --text: #f2fbf7;
+    --muted: #bed0ca;
+    --primary: #56cec2;
     --primary-deep: #9ee5da;
-    --secondary: #f59e63;
+    --secondary: #ff9f62;
     --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
     --hero-card-start: rgba(32, 83, 79, 0.96);
     --hero-card-end: rgba(10, 40, 38, 0.98);
-    --field-bg: #1a2a2f;
-    --field-text: #ebf6f0;
-    --field-placeholder: rgba(214, 235, 229, 0.68);
+    --field-bg: #203136;
+    --field-text: #f2fbf7;
+    --field-placeholder: rgba(214, 235, 229, 0.82);
     --auth-field-bg: #fffdfa;
     --auth-field-placeholder: rgba(17, 24, 39, 0.6);
     color-scheme: dark;
@@ -348,6 +348,12 @@ svg {
   color: #f6fffb;
 }
 
+.hero-card,
+.hero-card h2,
+.hero-card strong {
+  color: #f6fffb;
+}
+
 .eyebrow,
 .card-label {
   margin: 0 0 10px;
@@ -445,7 +451,7 @@ svg {
 }
 
 .feature-item span {
-  color: color-mix(in srgb, #f6fffb 82%, transparent);
+  color: rgba(246, 255, 251, 0.84);
 }
 
 .auth-shell,
@@ -632,6 +638,14 @@ svg {
   background: var(--panel-strong);
   padding: 18px;
   overflow-wrap: anywhere;
+}
+
+.result-card,
+.result-card p,
+.result-card li,
+.meal-card,
+.meal-card li {
+  color: var(--text);
 }
 
 .meal-card h3,
@@ -869,6 +883,11 @@ svg {
   color: var(--auth-muted);
 }
 
+.auth-shell .secondary-link,
+.auth-shell .auth-switch-link {
+  color: #8a3d0d;
+}
+
 .auth-shell .field-group input,
 .auth-shell .field-group select {
   background: var(--auth-field-bg);
@@ -1022,6 +1041,11 @@ svg {
 .toast-copy ul {
   margin: 0;
   padding-left: 18px;
+  color: var(--muted);
+}
+
+.bmi-scale-labels,
+.bmi-scale-values {
   color: var(--muted);
 }
 

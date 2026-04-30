@@ -114,13 +114,3 @@ The login page now includes a `Sign in with Google` button. To enable it:
    ```
 
    Keep it empty only when the frontend and backend run on the same origin, such as local `http://localhost:5000`.
-
-## Backend Environment Variables
-
-For local backend development, copy [.env.example](</C:/Users/hk450/Documents/New project/.env.example>) to `.env`.
-
-For hosted backend deployment, set these environment variables on the backend host:
-
-- `PORT`
-- `MONGODB_URI`
-- `JWT_SECRET`

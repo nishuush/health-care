@@ -8,6 +8,16 @@ import {
 const googleButtons = document.querySelectorAll("[data-google-signin]");
 const firebaseConfig = window.FIREBASE_CONFIG || {};
 const ui = window.healthTrackUI;
+const appConfig = window.APP_CONFIG || {};
+
+const buildApiUrl = (path) => {
+  const baseUrl = String(appConfig.apiBaseUrl || "").trim();
+  if (!baseUrl) {
+    return path;
+  }
+
+  return `${baseUrl.replace(/\/+$/, "")}${path}`;
+};
 
 const hasFirebaseConfig =
   firebaseConfig.apiKey &&
@@ -40,7 +50,7 @@ if (googleButtons.length && hasFirebaseConfig) {
           googleId: result.user.uid,
         };
 
-        const response = await fetch("/api/auth/firebase-google", {
+        const response = await fetch(buildApiUrl("/api/auth/firebase-google"), {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +58,8 @@ if (googleButtons.length && hasFirebaseConfig) {
           body: JSON.stringify(payload),
         });
 
-        const data = await response.json();
+        const text = await response.text();
+        const data = text ? JSON.parse(text) : {};
 
         if (!response.ok) {
           throw new Error(data.message || "Unable to sign in with Google.");
@@ -58,7 +69,11 @@ if (googleButtons.length && hasFirebaseConfig) {
         ui?.showToast?.(data.message, "success");
         window.location.href = ui?.getRedirectTarget?.() || "./diet.html";
       } catch (error) {
-        ui?.showToast?.(error.message || "Unable to sign in with Google.", "error");
+        const message =
+          error instanceof TypeError
+            ? "Google account opened, but the backend could not be reached. Check APP_CONFIG apiBaseUrl and backend hosting."
+            : error.message || "Unable to sign in with Google.";
+        ui?.showToast?.(message, "error");
       } finally {
         ui?.hideLoading?.();
       }

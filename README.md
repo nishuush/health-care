@@ -82,3 +82,13 @@ The login page now includes a `Sign in with Google` button. To enable it:
    ```
 
 4. After that, `Sign in with Google` on the login page will sign the user in and create or reuse the matching MongoDB user record.
+
+5. If your frontend and backend are hosted on different URLs, set the backend base URL in [public/app-config.js](</C:/Users/hk450/Documents/New project/public/app-config.js>):
+
+   ```js
+   window.APP_CONFIG = {
+     apiBaseUrl: "https://your-backend-url.onrender.com",
+   };
+   ```
+
+   Keep it empty only when the frontend and backend run on the same origin, such as local `http://localhost:5000`.

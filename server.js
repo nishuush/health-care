@@ -16,6 +16,23 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/patient_health_app";
 const JWT_SECRET = process.env.JWT_SECRET || "development-secret";
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "";
+
+app.use((req, res, next) => {
+  const requestOrigin = req.headers.origin;
+  const allowOrigin = FRONTEND_ORIGIN || requestOrigin || "*";
+
+  res.header("Access-Control-Allow-Origin", allowOrigin);
+  res.header("Vary", "Origin");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));

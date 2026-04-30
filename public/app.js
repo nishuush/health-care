@@ -13,6 +13,7 @@ const protectedLinks = document.querySelectorAll("[data-protected-link]");
 const themeToggle = document.getElementById("theme-toggle");
 const authEntryLinks = document.querySelector(".auth-entry-links");
 const projectCreditButtons = document.querySelectorAll("[data-project-credit]");
+const appConfig = window.APP_CONFIG || {};
 let projectPanelOverlay = null;
 let loadingOverlay = null;
 let loadingCounter = 0;
@@ -32,6 +33,15 @@ const isSafeInternalTarget = (value) =>
   !value.startsWith("https://") &&
   !value.startsWith("//") &&
   !value.startsWith("javascript:");
+
+const buildApiUrl = (path) => {
+  const baseUrl = String(appConfig.apiBaseUrl || "").trim();
+  if (!baseUrl) {
+    return path;
+  }
+
+  return `${baseUrl.replace(/\/+$/, "")}${path}`;
+};
 
 const calculateBmi = (heightCm, weightKg) => {
   if (!heightCm || !weightKg) {
@@ -387,7 +397,19 @@ const apiRequest = async (url, options = {}) => {
     });
 
     const responseText = await response.text();
-    const data = responseText ? JSON.parse(responseText) : {};
+    let data = {};
+    if (responseText) {
+      try {
+        data = JSON.parse(responseText);
+      } catch (_error) {
+        if (!response.ok) {
+          throw new Error(
+            "The backend returned a non-JSON error. Check API_BASE_URL, Render logs, and FRONTEND_ORIGIN."
+          );
+        }
+        throw new SyntaxError("Invalid JSON response.");
+      }
+    }
 
     if (!response.ok) {
       const error = new Error(data.message || "Something went wrong.");
@@ -491,7 +513,7 @@ if (signupForm) {
         return;
       }
 
-      const data = await apiRequest("/api/auth/signup", {
+      const data = await apiRequest(buildApiUrl("/api/auth/signup"), {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -518,7 +540,7 @@ if (signinForm) {
         return;
       }
 
-      const data = await apiRequest("/api/auth/signin", {
+      const data = await apiRequest(buildApiUrl("/api/auth/signin"), {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -552,7 +574,7 @@ if (nutrientForm) {
         return;
       }
 
-      const data = await apiRequest(`/api/nutrients?age=${age}`, {
+      const data = await apiRequest(buildApiUrl(`/api/nutrients?age=${age}`), {
         method: "GET",
         headers: {},
       });
@@ -682,7 +704,7 @@ if (dietForm) {
         return;
       }
 
-      const data = await apiRequest("/api/diet/recommendation", {
+      const data = await apiRequest(buildApiUrl("/api/diet/recommendation"), {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -784,7 +806,7 @@ const bootstrap = async () => {
   }
 
   try {
-    const data = await apiRequest("/api/auth/me");
+    const data = await apiRequest(buildApiUrl("/api/auth/me"));
     setSession(getToken(), data.user);
   } catch (_error) {
     clearSession();

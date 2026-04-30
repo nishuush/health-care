@@ -105,6 +105,20 @@ app.post("/api/auth/signup", async (req, res) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      if (!existingUser.password && existingUser.googleId) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        existingUser.name = name || existingUser.name;
+        existingUser.password = hashedPassword;
+        await existingUser.save();
+
+        return res.status(200).json(
+          buildAuthResponse(
+            existingUser,
+            "Account completed successfully. You can now sign in with password or Google."
+          )
+        );
+      }
+
       return formatErrorResponse(res, 409, "Email is already registered.", [
         "Use another email or log in with the existing account.",
       ]);

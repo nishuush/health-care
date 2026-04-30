@@ -61,6 +61,28 @@ Important:
 - The Node.js backend and MongoDB APIs cannot run on GitHub Pages.
 - If you deploy this repo to GitHub Pages, login, Google sign-in, smart diet generation, and MongoDB features will still need a separately hosted backend.
 
+### GitHub Variables for Frontend Build
+
+When deploying to GitHub Pages, the workflow can generate frontend config files from GitHub Actions repository variables or secrets.
+
+Set these in `Settings -> Secrets and variables -> Actions`:
+
+- `API_BASE_URL`
+- `FIREBASE_API_KEY`
+- `FIREBASE_AUTH_DOMAIN`
+- `FIREBASE_PROJECT_ID`
+- `FIREBASE_STORAGE_BUCKET`
+- `FIREBASE_MESSAGING_SENDER_ID`
+- `FIREBASE_APP_ID`
+- `FIREBASE_MEASUREMENT_ID`
+
+The workflow uses these values to build:
+
+- [public/app-config.js](</C:/Users/hk450/Documents/New project/public/app-config.js>)
+- [public/firebase-config.js](</C:/Users/hk450/Documents/New project/public/firebase-config.js>)
+
+Use repository `Variables` for frontend values when possible, because these values become part of the public static site after deployment. Only keep true server-side secrets, like `MONGODB_URI` and `JWT_SECRET`, on your backend hosting platform such as Render or Railway.
+
 ## Firebase Google Sign-In
 
 The login page now includes a `Sign in with Google` button. To enable it:
@@ -92,3 +114,13 @@ The login page now includes a `Sign in with Google` button. To enable it:
    ```
 
    Keep it empty only when the frontend and backend run on the same origin, such as local `http://localhost:5000`.
+
+## Backend Environment Variables
+
+For local backend development, copy [.env.example](</C:/Users/hk450/Documents/New project/.env.example>) to `.env`.
+
+For hosted backend deployment, set these environment variables on the backend host:
+
+- `PORT`
+- `MONGODB_URI`
+- `JWT_SECRET`

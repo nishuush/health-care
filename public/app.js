@@ -566,6 +566,11 @@ const renderHealthProblemAnalysis = (analysis) => {
       </article>
     </section>
   `;
+
+  healthProblemResult.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 };
 
 if (signupForm) {

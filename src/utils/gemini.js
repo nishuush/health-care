@@ -124,6 +124,7 @@ Rules:
 - If the issue sounds serious, clearly recommend visiting a doctor
 - Mention urgent care if red-flag symptoms are present
 - Keep advice short, practical, and safe
+- The user may write symptoms in Hindi, Hinglish, or English. Understand and respond correctly.
 
 Return ONLY valid JSON with this exact structure:
 {
@@ -176,7 +177,7 @@ const generateDietWithGemini = async (inputs) => {
 const generateHealthProblemAdvice = async (inputs) =>
   callGeminiJson({
     systemInstruction:
-      "You are a careful health assistant. Never provide a definitive diagnosis. Respond only in valid JSON.",
+      "You are a careful health assistant. Understand Hindi, Hinglish, and English symptom descriptions. Never provide a definitive diagnosis. Respond only in valid JSON.",
     prompt: buildProblemPrompt(inputs),
   });
 

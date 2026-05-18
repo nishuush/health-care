@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Diet Recommendation | Health Care</title>
+    <title>Health Problem Assistant | Health Care</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,11 +19,11 @@
         <div class="header-main">
           <a class="brand" href="./index.html">Health Care</a>
           <nav class="site-nav">
-            <a class="active" href="./diet.html">Smart Diet</a>
-            <a href="./diet-plan.html">Diet Chart</a>
-            <a href="./health-problem.html">Health Help</a>
-            <a href="./nutrients.html">Nutrients</a>
-            <a href="./bmi.html">BMI</a>
+            <a href="./diet.html" data-protected-link>Smart Diet</a>
+            <a href="./diet-plan.html" data-protected-link>Diet Chart</a>
+            <a href="./health-problem.html" class="active" data-protected-link>Health Help</a>
+            <a href="./nutrients.html" data-protected-link>Nutrients</a>
+            <a href="./bmi.html" data-protected-link>BMI</a>
           </nav>
         </div>
         <div class="header-actions">
@@ -49,36 +49,35 @@
       </header>
 
       <main class="stack-layout" data-protected-page>
-        <section class="panel">
+        <section class="panel modern-form-panel">
           <div class="section-title">
-            <p class="eyebrow">Smart Diet Recommendation</p>
-            <h2>Build your personalized Indian diet plan</h2>
+            <p class="eyebrow">Gemini Health Help</p>
+            <h2>Tell us what health problem you have</h2>
           </div>
           <p class="page-copy">
-            Enter your health details and we will calculate calories, estimate your BMI,
-            and prepare a practical daily meal plan using familiar Indian foods.
+            Describe your issue to get safe general guidance, simple gharalu upaaye for mild problems,
+            and a clear suggestion when a doctor visit is important.
           </p>
-
-          <div class="journey-banner">
-            <div class="journey-step active">
-              <span>1</span>
-              <strong>Enter Details</strong>
-            </div>
-            <div class="journey-step">
-              <span>2</span>
-              <strong>Get Meal Plan</strong>
-            </div>
+          <div class="info-strip-grid">
+            <article class="info-strip-card">
+              <strong>Minor issues</strong>
+              <span>Home-care tips and simple support advice</span>
+            </article>
+            <article class="info-strip-card">
+              <strong>Serious symptoms</strong>
+              <span>Clear advice to visit a doctor or seek urgent care</span>
+            </article>
           </div>
 
-          <form id="diet-form" class="detail-form">
+          <form id="health-problem-form" class="detail-form">
             <div class="form-grid">
               <div class="field-group">
-                <label for="diet-age">Age</label>
-                <input id="diet-age" name="age" type="number" min="1" placeholder="21" required />
+                <label for="problem-age">Age</label>
+                <input id="problem-age" name="age" type="number" min="1" placeholder="28" required />
               </div>
               <div class="field-group">
-                <label for="diet-gender">Gender</label>
-                <select id="diet-gender" name="gender" required>
+                <label for="problem-gender">Gender</label>
+                <select id="problem-gender" name="gender" required>
                   <option value="">Select gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -86,39 +85,43 @@
                 </select>
               </div>
               <div class="field-group">
-                <label for="diet-weight">Weight (kg)</label>
-                <input id="diet-weight" name="weight" type="number" min="1" step="0.1" placeholder="70" required />
+                <label for="problem-main">Main Problem</label>
+                <input id="problem-main" name="problem" type="text" placeholder="Stomach pain, cough, headache" required />
               </div>
               <div class="field-group">
-                <label for="diet-height">Height (cm)</label>
-                <input id="diet-height" name="height" type="number" min="1" step="0.1" placeholder="175" required />
+                <label for="problem-duration">Duration</label>
+                <input id="problem-duration" name="duration" type="text" placeholder="2 days, 1 week" required />
               </div>
               <div class="field-group">
-                <label for="diet-bmi">BMI</label>
-                <input id="diet-bmi" name="bmi" type="number" min="1" step="0.1" placeholder="Auto-calculated if empty" />
-              </div>
-              <div class="field-group">
-                <label for="diet-goal">Goal</label>
-                <select id="diet-goal" name="goal" required>
-                  <option value="">Select goal</option>
-                  <option value="Weight Loss">Weight Loss</option>
-                  <option value="Maintain">Maintain</option>
-                  <option value="Weight Gain">Weight Gain</option>
+                <label for="problem-severity">Severity</label>
+                <select id="problem-severity" name="severity" required>
+                  <option value="">Select severity</option>
+                  <option value="mild">Mild</option>
+                  <option value="moderate">Moderate</option>
+                  <option value="serious">Serious</option>
                 </select>
               </div>
               <div class="field-group">
-                <label for="diet-activity">Activity Level</label>
-                <select id="diet-activity" name="activity" required>
-                  <option value="">Select activity</option>
-                  <option value="Sedentary">Sedentary</option>
-                  <option value="Light">Light</option>
-                  <option value="Moderate">Moderate</option>
-                  <option value="Active">Active</option>
-                </select>
+                <label for="problem-history">Medical History</label>
+                <input id="problem-history" name="medicalHistory" type="text" placeholder="Diabetes, BP, allergy, none" />
               </div>
             </div>
-            <button type="submit" class="primary-button">Generate Diet Plan</button>
+            <div class="field-group">
+              <label for="problem-symptoms">Symptoms</label>
+              <textarea id="problem-symptoms" name="symptoms" rows="4" placeholder="Describe symptoms clearly..." required></textarea>
+            </div>
+            <button type="submit" class="primary-button">Analyze Problem</button>
           </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <p class="eyebrow">Result</p>
+            <h2>Guidance from Gemini</h2>
+          </div>
+          <div id="health-problem-result" class="result-card">
+            General health guidance will appear here. This tool does not replace a doctor.
+          </div>
         </section>
       </main>
 

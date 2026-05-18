@@ -8,6 +8,8 @@ const bmiForm = document.getElementById("bmi-form");
 const bmiResult = document.getElementById("bmi-result");
 const dietForm = document.getElementById("diet-form");
 const dietPlanResult = document.getElementById("diet-plan-result");
+const healthProblemForm = document.getElementById("health-problem-form");
+const healthProblemResult = document.getElementById("health-problem-result");
 const protectedPageRoot = document.querySelector("[data-protected-page]");
 const protectedLinks = document.querySelectorAll("[data-protected-link]");
 const themeToggle = document.getElementById("theme-toggle");
@@ -531,6 +533,41 @@ const renderDietPlan = (recommendation) => {
   `;
 };
 
+const renderHealthProblemAnalysis = (analysis) => {
+  if (!healthProblemResult) {
+    return;
+  }
+
+  healthProblemResult.innerHTML = `
+    <div class="result-summary-grid">
+      <article class="result-card">
+        <p class="card-label">Condition Summary</p>
+        <h3>${analysis.conditionSummary || "General guidance"}</h3>
+        <p><strong>Severity:</strong> ${analysis.severityLevel || "Not specified"}</p>
+      </article>
+      <article class="result-card">
+        <p class="card-label">Doctor Advice</p>
+        <p>${analysis.doctorAdvice || "If symptoms worsen, visit a doctor."}</p>
+        <p class="result-disclaimer">${analysis.disclaimer || ""}</p>
+      </article>
+    </div>
+    <section class="meal-grid">
+      <article class="result-card">
+        <p class="card-label">Possible Care</p>
+        <ul>${(analysis.possibleCare || []).map((item) => `<li>${item}</li>`).join("")}</ul>
+      </article>
+      <article class="result-card">
+        <p class="card-label">Gharalu Uppaaye</p>
+        <ul>${(analysis.homeRemedies || []).map((item) => `<li>${item}</li>`).join("")}</ul>
+      </article>
+      <article class="result-card">
+        <p class="card-label">Diet Support</p>
+        <ul>${(analysis.dietSupport || []).map((item) => `<li>${item}</li>`).join("")}</ul>
+      </article>
+    </section>
+  `;
+};
+
 if (signupForm) {
   signupForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -759,6 +796,57 @@ if (dietForm) {
       window.location.href = "./diet-plan.html";
     } catch (error) {
       showToast(error.message, "error", error.details || []);
+    }
+  });
+}
+
+if (healthProblemForm) {
+  healthProblemForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    if (!getToken()) {
+      showToast("Please sign in to use the health problem assistant.", "error");
+      window.location.href = "signin.html";
+      return;
+    }
+
+    const formData = new FormData(healthProblemForm);
+    const payload = Object.fromEntries(formData.entries());
+    payload.age = Number(payload.age);
+    payload.gender = trimValue(payload.gender);
+    payload.problem = trimValue(payload.problem);
+    payload.symptoms = trimValue(payload.symptoms);
+    payload.duration = trimValue(payload.duration);
+    payload.severity = trimValue(payload.severity);
+    payload.medicalHistory = trimValue(payload.medicalHistory);
+
+    try {
+      if (
+        Number.isNaN(payload.age) ||
+        payload.age <= 0 ||
+        !payload.gender ||
+        !payload.problem ||
+        !payload.symptoms ||
+        !payload.duration ||
+        !payload.severity
+      ) {
+        showToast("Please complete all required health problem details.", "error");
+        return;
+      }
+
+      const data = await apiRequest(buildApiUrl("/api/health-problem/analyze"), {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+
+      renderHealthProblemAnalysis(data.analysis);
+      showToast(data.message, "success");
+    } catch (error) {
+      showToast(error.message, "error", error.details || []);
+      if (healthProblemResult) {
+        healthProblemResult.textContent =
+          "Unable to analyze the health problem right now. Please try again later.";
+      }
     }
   });
 }

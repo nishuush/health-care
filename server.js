@@ -10,6 +10,11 @@ dotenv.config();
 const User = require("./src/models/User");
 const { buildNutrientGuidance } = require("./src/utils/nutrients");
 const { buildDietRecommendation } = require("./src/utils/dietPlan");
+const {
+  GEMINI_API_KEY,
+  generateDietWithGemini,
+  generateHealthProblemAdvice,
+} = require("./src/utils/gemini");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -320,7 +325,7 @@ app.post("/api/diet/recommendation", authMiddleware, (req, res) => {
       return formatErrorResponse(res, 400, "Please fix the diet form issues.", errors);
     }
 
-    const recommendation = buildDietRecommendation({
+    const inputs = {
       age,
       gender,
       weight,
@@ -328,17 +333,112 @@ app.post("/api/diet/recommendation", authMiddleware, (req, res) => {
       bmi: Number.isNaN(bmiInput) ? null : bmiInput,
       goal,
       activity,
-    });
+    };
 
-    return res.json({
-      message: "Diet plan generated successfully.",
-      recommendation,
-    });
+    return Promise.resolve()
+      .then(async () => {
+        if (GEMINI_API_KEY) {
+          const recommendation = await generateDietWithGemini({
+            ...inputs,
+            bmi:
+              inputs.bmi ||
+              Number((weight / ((height / 100) * (height / 100))).toFixed(1)),
+          });
+
+          return res.json({
+            message: "Diet plan generated successfully with Gemini.",
+            recommendation,
+          });
+        }
+
+        const recommendation = buildDietRecommendation(inputs);
+        return res.json({
+          message: "Diet plan generated successfully.",
+          recommendation,
+        });
+      })
+      .catch((error) => {
+        console.error("Gemini diet fallback error:", error.message);
+
+        const recommendation = buildDietRecommendation(inputs);
+        return res.json({
+          message: "Diet plan generated with local guidance because AI service was unavailable.",
+          recommendation,
+        });
+      });
   } catch (error) {
     console.error("Diet recommendation error:", error);
     return formatErrorResponse(res, 500, "Unable to generate a diet plan right now.", [
       "Please try again in a moment.",
     ]);
+  }
+});
+
+app.post("/api/health-problem/analyze", authMiddleware, async (req, res) => {
+  try {
+    const age = Number(req.body.age);
+    const gender = sanitizeText(req.body.gender);
+    const problem = sanitizeText(req.body.problem);
+    const symptoms = sanitizeText(req.body.symptoms);
+    const duration = sanitizeText(req.body.duration);
+    const severity = sanitizeText(req.body.severity);
+    const medicalHistory = sanitizeText(req.body.medicalHistory);
+    const errors = [];
+
+    if (Number.isNaN(age) || age <= 0) {
+      errors.push("Age must be a valid number.");
+    }
+    if (!gender) {
+      errors.push("Gender is required.");
+    }
+    if (!problem) {
+      errors.push("Please describe the main problem.");
+    }
+    if (!symptoms) {
+      errors.push("Please enter symptoms.");
+    }
+    if (!duration) {
+      errors.push("Please mention the duration.");
+    }
+    if (!severity) {
+      errors.push("Please select severity.");
+    }
+
+    if (errors.length) {
+      return formatErrorResponse(res, 400, "Please fix the health problem form issues.", errors);
+    }
+
+    if (!GEMINI_API_KEY) {
+      return formatErrorResponse(
+        res,
+        503,
+        "Gemini API is not configured on the backend.",
+        ["Set GEMINI_API_KEY on the backend host to use this feature."]
+      );
+    }
+
+    const analysis = await generateHealthProblemAdvice({
+      age,
+      gender,
+      problem,
+      symptoms,
+      duration,
+      severity,
+      medicalHistory,
+    });
+
+    return res.json({
+      message: "Health guidance generated successfully with Gemini.",
+      analysis,
+    });
+  } catch (error) {
+    console.error("Health problem analysis error:", error);
+    return formatErrorResponse(
+      res,
+      500,
+      "Unable to analyze the health problem right now.",
+      ["Please try again later or consult a doctor for urgent issues."]
+    );
   }
 });
 
@@ -358,6 +458,9 @@ app.get("/api/health", (_req, res) => {
     database: {
       state: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
       mode: isAtlasConnection ? "online-atlas" : "local",
+    },
+    ai: {
+      geminiConfigured: Boolean(GEMINI_API_KEY),
     },
   });
 });

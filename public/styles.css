@@ -140,7 +140,8 @@ body.panel-open {
 button,
 input,
 select,
-a {
+a,
+textarea {
   font: inherit;
 }
 
@@ -605,7 +606,8 @@ svg {
 }
 
 .field-group input,
-.field-group select {
+.field-group select,
+.field-group textarea {
   width: 100%;
   padding: 13px 14px;
   border-radius: 14px;
@@ -615,14 +617,21 @@ svg {
 }
 
 .field-group input::placeholder,
+.field-group textarea::placeholder,
 .field-group select:invalid {
   color: var(--field-placeholder);
 }
 
 .field-group input:focus,
-.field-group select:focus {
+.field-group select:focus,
+.field-group textarea:focus {
   outline: 2px solid rgba(15, 118, 110, 0.2);
   border-color: rgba(15, 118, 110, 0.5);
+}
+
+.field-group textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 .form-grid {
@@ -889,15 +898,23 @@ svg {
 }
 
 .auth-shell .field-group input,
-.auth-shell .field-group select {
+.auth-shell .field-group select,
+.auth-shell .field-group textarea {
   background: var(--auth-field-bg);
   color: var(--auth-text);
   border-color: rgba(15, 23, 42, 0.12);
 }
 
 .auth-shell .field-group input::placeholder,
+.auth-shell .field-group textarea::placeholder,
 .auth-shell .field-group select:invalid {
   color: var(--auth-field-placeholder);
+}
+
+.result-disclaimer {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
 .info-panel-overlay {
@@ -1229,6 +1246,7 @@ body::-webkit-scrollbar-thumb:hover,
 
   .field-group input,
   .field-group select,
+  .field-group textarea,
   .primary-button,
   .secondary-button,
   .primary-link,
